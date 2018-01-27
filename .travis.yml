@@ -1,0 +1,41 @@
+language: android
+android:
+  components:
+  - tools # to get the new `repository-11.xml`
+  - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
+  - platform-tools
+  - build-tools-26.0.3
+  - android-27
+
+jdk:
+- oraclejdk8
+
+before_install:
+- yes | sdkmanager "platforms;android-27"
+
+script:
+- "./gradlew build connectedCheck"
+
+branches:
+  except:
+  - gh-pages
+
+cache:
+  directories:
+  - "$HOME/.gradle"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: HJUAv6rWaIhA/89n/AxfOj1qz4rRJMPxEPOWEKxUPmWyHQkmzSdzuo5kanZrgEf+U+tORExG64useHKmtez9qG6EtzpBCA1AFM+ASqaeg8EXg1Ca34KFrVzUE+1WrngmFKWRHEGHrY+TBgCdi636eBD+22b88Et6Fisd86C/5CtkSuqmNa9K7ehjOvwsY5g1ejhC7BNcFgfHCWF/A3n+Pv9WhgsD/nNHvcEBx/uUntB6KSYhMRDMNPrVhksTHuqQhJzmwfkvZbU/g95kRRMHRACTlanejwz+4aCeuYksdcOo3TjOfzwhaviTmAWJws/dJcYiA8zPPcIbq07vwAOxBpOEDHHin+AZLF1iHjaApLdWejimqW/3bKPupx375mVJmOYj9qBRGoE6Fa+Ch6gkFsblArEfLmv1wqrk3O9/O6U+7Pl9jI4dT1GfeLfzum6VyyBpGrYHowS9GFhg5p3TDp1vv0b7IRpLgDBMCw/sG/6+f49Ewp7jPCbtPLn8JPHLg5Vxh5Lz1ElWDgcclZ3kaqSZsscZkAjlKhvSMMWoCPR7C3x4mJkRI4KGUgm/+Q5M7CgkjKkNwuzZceAo9xEefwjhGo8Dfo2izbcJ2BoYezWJivUJHl9tvcikgKlWdGHEGq15SaVO01KP2Y1xjyrlCNI/Sm1lW2N56MmWBzx95oY=
+  file:
+  - "tools-nullable/build/outputs/aar/tools-nullable-debug.aar"
+  - "tools-preferences/build/outputs/aar/tools-preferences-debug.aar"
+  - "tools-rx-adapter/build/outputs/aar/tools-rx-adapter-debug.aar"
+  - "tools-rx-fingerprint/build/outputs/aar/tools-rx-fingerprint-debug.aar"
+  - "tools-rx-foreground/build/outputs/aar/tools-rx-foreground-debug.aar"
+  - "tools-rx-retrofit/build/outputs/aar/tools-rx-retrofit-debug.aar"
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: wrabot/AndroidKotlinTools
