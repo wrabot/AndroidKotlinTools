@@ -11,13 +11,14 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
+@file:Suppress("unused")
+
 package com.wrabot.tools
 
 import android.content.SharedPreferences
 import java.util.*
 import kotlin.reflect.KProperty
 
-@Suppress("unused")
 open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
     fun clear() = sharedPreferences.edit().clear().apply()
 

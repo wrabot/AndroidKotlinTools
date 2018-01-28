@@ -11,7 +11,7 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.wrabot.tools
+package com.wrabot.tools.reflect
 
 import kotlin.reflect.KType
 import kotlin.reflect.full.memberProperties
