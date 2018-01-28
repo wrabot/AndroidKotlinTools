@@ -2,19 +2,23 @@
 
 **UNDER CONSTRUCTION => DO NOT USE NOW**
 
-Set of tools that in my Android projects.
+Set of tools that I use in my Android projects.
 
 They are split in modules to avoid including all dependencies and permissions
 
 ## tools-base
 Needs no dependencies or permissions
 
-**SharedPreferencesManager**: maps kotlin properties to SharedPreferences easily
+**SharedPreferencesManager**: map kotlin properties to SharedPreferences easily
+
+**SpannableStringBuilder extensions**: create spannable easily
+
+**Throwable extension**: find a cause with a predicate
 
 ## tools-reflect
 Needs only reflection
 
-**checkNullable**: checks by reflection that kotlin mandatory members are really not null.
+**checkNullable**: check by reflection that kotlin mandatory members are really not null.
 This is useful when kotlin objects are created with java reflection (like with Gson).
 
 ## tools-rx-base
@@ -25,17 +29,17 @@ Needs only RX
 ## tools-rx-databinding
 Needs RX and data binding
 
-**RxSimpleAdapter**: easily use recycler views with RX adapter
+**RxSimpleAdapter**: use easily recycler views with RX adapter
 
 ## tools-rx-fingerprint
 Needs RX and USE_FINGERPRINT permission
 
-**FingerPrintHelper**: Cipher and decipher data with fingerprint through RX
+**FingerPrintHelper**: cipher and decipher data with fingerprint through RX
 
 ## tools-rx-retrofit
 Needs RX and retrofit
 
-**RxCallAdapterFactory**:Create a Retrofit call adapter factory for RX with the ability to add retry
+**RxCallAdapterFactory**: create a Retrofit call adapter factory for RX with the ability to add retry
 
 ## installation
 
@@ -45,7 +49,7 @@ Add the following repository
         maven { url 'https://jitpack.io' }
     }
     
-Add the needed dependencies (one of them as you need)
+Add the needed dependencies (just one or several)
 
     dependencies {
         implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.1'
