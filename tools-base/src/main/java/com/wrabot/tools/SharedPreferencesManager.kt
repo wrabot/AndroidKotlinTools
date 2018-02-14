@@ -19,8 +19,40 @@ import android.content.SharedPreferences
 import java.util.*
 import kotlin.reflect.KProperty
 
+/**
+ * A shared preferences manager.
+ *
+ * It maps shared preferences fields to kotlin properties
+ * It must be extended with the custom fields in shared preferences
+ *
+ * @code
+ * class MyPreferencesManager(sharedPreferences: SharedPreferences) : SharedPreferencesManager(sharedPreferences) {
+ *      var myString by StringDelegate()
+ *      var myInt by IntDelegate()
+ *      var myBool by BooleanDelegate()
+ * }
+ * @code
+ *
+ * @property name the name of this group.
+ * @constructor Creates a shared preferences manager.
+ */
+@Suppress("MemberVisibilityCanBePrivate")
 open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
-    fun clear() = sharedPreferences.edit().clear().apply()
+
+    /**
+     * Clear shared preferences with optional exceptions.
+     *
+     * @property exceptions the property names to excluded from clear.
+     */
+    fun clear(vararg exceptions: String) = sharedPreferences.edit().apply {
+        if (exceptions.isEmpty())
+            clear()
+        else
+            sharedPreferences.all.keys.forEach {
+                if (!exceptions.contains(it))
+                    remove(it)
+            }
+    }.apply()
 
     inner class StringDelegate(defaultValue: String = "")
         : PreferenceDelegate<String>(SharedPreferences::getString, defaultValue, SharedPreferences.Editor::putString)
