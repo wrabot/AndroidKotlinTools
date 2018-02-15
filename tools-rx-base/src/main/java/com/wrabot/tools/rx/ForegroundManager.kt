@@ -18,8 +18,16 @@ import android.app.Application
 import android.os.Bundle
 import io.reactivex.subjects.BehaviorSubject
 
+/**
+ * Detects application background/foreground.
+ *
+ * registerActivityLifecycleCallbacks(ForegroundManager)
+ */
 @Suppress("unused")
 object ForegroundManager : Application.ActivityLifecycleCallbacks {
+    /**
+     * Subscribe to this subject to receive background/foreground events.
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     val foreground = BehaviorSubject.createDefault(false)!!
 

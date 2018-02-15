@@ -20,20 +20,32 @@ import android.text.Spanned
 
 fun <T : Any> T.println() = apply { println(this) }
 
+/**
+ * Creates SpannableStringBuilder from a [text] with several [spans].
+ */
 fun spannableStringBuilder(text: CharSequence, vararg spans: Any) = SpannableStringBuilder(text).apply {
     setSpans(0, length, *spans)
 }
 
+/**
+ * Append a [text] with several [spans] to a SpannableStringBuilder
+ */
 fun SpannableStringBuilder.append(text: CharSequence, vararg spans: Any) = apply {
     val start = length
     append(text)
     setSpans(start, length, *spans)
 }
 
+/**
+ * Append a [text] with several [spans] and a new line to a SpannableStringBuilder
+ */
 fun SpannableStringBuilder.appendln(text: CharSequence, vararg spans: Any) = append(text, *spans).apply {
     appendln()
 }
 
+/**
+ * Apply several [spans] to a SpannableStringBuilder
+ */
 fun SpannableStringBuilder.setSpans(start: Int, end: Int, vararg spans: Any) = apply {
     spans.forEach {
         setSpan(it, start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
