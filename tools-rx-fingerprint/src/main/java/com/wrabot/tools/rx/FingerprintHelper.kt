@@ -29,11 +29,22 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
+/**
+ * An helper which cipher or decipher strings with fingerprint.
+ * @param context the Android context
+ * @param name the internal key name
+ */
 @Suppress("unused")
 class FingerprintHelper(context: Context, private val name: String = "FINGERPRINT") {
+    /**
+     * The underlying compat helper which can be used to test if hardware is Detected and the device has enrolled fingerprints.
+     */
     @Suppress("MemberVisibilityCanBePrivate")
     val fingerprintManager: FingerprintManagerCompat = FingerprintManagerCompat.from(context)
 
+    /**
+     * An event emitted when ciphering or deciphering with fingerprint.
+     */
     sealed class Event {
         data class Error(val error: CharSequence) : Event()
         data class Help(val help: CharSequence) : Event()
@@ -41,6 +52,11 @@ class FingerprintHelper(context: Context, private val name: String = "FINGERPRIN
         data class Success(val result: String) : Event()
     }
 
+    /**
+     * Cipher a string
+     * @param plain the plain string
+     * @return Observable<Event> which completes when ciphering finishes
+     */
     fun cipher(plain: String) = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) null else
         createCipher(Cipher.ENCRYPT_MODE).run {
             authenticate(plain.toByteArray(), this) {
@@ -48,6 +64,11 @@ class FingerprintHelper(context: Context, private val name: String = "FINGERPRIN
             }
         }
 
+    /**
+     * Decipher a string from previously ciphered string
+     * @param cipher the ciphered string
+     * @return Observable<Event> which completes when deciphering finishes
+     */
     fun decipher(cipher: String?) = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) null else {
         cipher?.let {
             it.split(' ').takeIf { it.size == 2 }?.let {

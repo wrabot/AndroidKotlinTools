@@ -1,7 +1,5 @@
 # Android Kotlin Tools
 
-**Documentation is under construction**
-
 Set of tools that I use in my Android projects.
 
 They are split in modules to avoid including all dependencies and permissions
@@ -28,7 +26,7 @@ Add the needed dependencies (just one or several)
 ## tools-base
 Needs no dependencies or permissions
 
-**SharedPreferencesManager**: map kotlin properties to SharedPreferences easily (see KDoc).
+**SharedPreferencesManager**: map kotlin properties to SharedPreferences easily.
 
 With extended this class, kotlin properties can maps the shared preferences content.
 ```kotlin
@@ -39,7 +37,7 @@ class MyPreferencesManager(context: Context) : SharedPreferencesManager(context.
 }
 ```
 
-In this example myString, myInt, myBool are retrieve and stored automatically in shared preferences with this names.
+In this example myString, myInt, myBool are retrieved and stored automatically in shared preferences with this names.
 
 **SpannableStringBuilder extensions**: create spannable easily with multiple spans on a text (see KDoc).
 
@@ -60,7 +58,7 @@ Needs only RX
 
 Add the following line in your application class
 ```kotlin
-open class OMApp : Application() {
+open class MyApp : Application() {
     override fun onCreate() {
         ...
         registerActivityLifecycleCallbacks(ForegroundManager)
@@ -148,16 +146,44 @@ RxSimpleAdapter provides also PublishSubject called "clicks" which allow to hand
 override fun onCreate(savedInstanceState: Bundle?) {
     ...
     recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem, Item::id).apply {
-        clicks.observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this@MyActivity).subscribe {
+        clicks.bindToLifecycle(this@MyActivity).subscribe {
             println("${it.title} is clicked")
         }
     }
 }
 ```
+
 ## tools-rx-fingerprint
 Needs RX and USE_FINGERPRINT permission
 
 **FingerPrintHelper**: cipher and decipher data with fingerprint through RX
+
+
+```kotlin
+val helper = FingerprintHelper(context)
+```
+
+```kotlin
+helper.cipher(plain).observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this).subscribe {
+    when (it) {
+        is FingerprintHelper.Event.Help -> show(it.help)
+        FingerprintHelper.Event.Failure -> handleFailure()
+        is FingerprintHelper.Event.Error -> show(it.error)
+        is FingerprintHelper.Event.Success -> storeSecret(it.result)
+    }
+}
+```
+
+```kotlin
+helper.decipher(secret).observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this).subscribe {
+    when (it) {
+        is FingerprintHelper.Event.Help -> show(it.help)
+        FingerprintHelper.Event.Failure -> handleFailure()
+        is FingerprintHelper.Event.Error -> show(it.error)
+        is FingerprintHelper.Event.Success -> usePlain(it.result)
+    }
+}
+```
 
 ## tools-rx-retrofit
 Needs RX and retrofit
