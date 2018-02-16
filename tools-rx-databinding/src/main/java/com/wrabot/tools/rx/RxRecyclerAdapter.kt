@@ -24,7 +24,8 @@ import io.reactivex.disposables.Disposable
  * @param observable the observable which provides values
  * @param initialValue the initial value
  */
-abstract class RxRecyclerAdapter<T : Any, U : RecyclerView.ViewHolder>(private val observable: Observable<T>, initialValue: T) : RecyclerView.Adapter<U>() {
+@Suppress("MemberVisibilityCanBePrivate")
+abstract class RxRecyclerAdapter<T : Any, U : RecyclerView.ViewHolder>(val observable: Observable<T>, initialValue: T) : RecyclerView.Adapter<U>() {
     /**
      * The current value.
      */
