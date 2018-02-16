@@ -33,7 +33,7 @@ import kotlin.reflect.KProperty
  * }
  * @code
  *
- * @property name the name of this group.
+ * @property sharedPreferences the underlying shared preferences.
  * @constructor Creates a shared preferences manager.
  */
 @Suppress("MemberVisibilityCanBePrivate")
