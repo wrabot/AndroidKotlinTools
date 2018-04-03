@@ -51,7 +51,7 @@ class RxCallAdapterFactory(private val retry: (throwable: Throwable) -> Observab
             })
             enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
-                    it.onNext(response.body()!!)
+                    response.body()?.apply { it.onNext(this) }
                     it.onComplete()
                 }
 

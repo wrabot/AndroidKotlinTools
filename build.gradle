@@ -10,7 +10,7 @@ buildscript {
     ext.buildToolsVersion = '26.0.3'
     ext.minSdkVersion = 16
 
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.31'
     ext.support_version = '27.0.2'
     ext.rxandroid_version = '2.0.1'
     ext.rxbinding_version = '2.0.0'
