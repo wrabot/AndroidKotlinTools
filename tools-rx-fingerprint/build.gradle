@@ -8,6 +8,10 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         buildToolsVersion rootProject.ext.buildToolsVersion
     }
+
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
 }
 
 dependencies {

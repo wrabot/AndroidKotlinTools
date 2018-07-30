@@ -10,6 +10,10 @@ android {
         buildToolsVersion rootProject.ext.buildToolsVersion
     }
 
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+
     dataBinding.enabled = true
 }
 
