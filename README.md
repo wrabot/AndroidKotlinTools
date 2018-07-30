@@ -16,11 +16,9 @@ Add the needed dependencies (just one or several)
 
     dependencies {
         implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.2'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-reflect:0.2'
         implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.2'
         implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.2'
         implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.2'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-retrofit:0.2'
     }
     
 ## tools-base
@@ -44,12 +42,6 @@ In this example myString, myInt, myBool are retrieved and stored automatically i
 **Throwable extension**: find a cause with a predicate (see KDoc).
 
 **Views utilities**: hide/show views easily (see KDoc).
-
-## tools-reflect
-Needs only reflection
-
-**checkNullable**: check by reflection that kotlin mandatory members are really not null.
-This is useful when kotlin objects are created with java reflection like with Gson (see KDoc).
 
 ## tools-rx-base
 Needs only RX
@@ -169,7 +161,7 @@ helper.cipher(plain).observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(t
         is FingerprintHelper.Event.Help -> show(it.help)
         FingerprintHelper.Event.Failure -> handleFailure()
         is FingerprintHelper.Event.Error -> show(it.error)
-        is FingerprintHelper.Event.Success -> storeSecret(it.result)
+        is FingerprintHelper.Event.Success -> storeCipheredSecret(it.result)
     }
 }
 ```
@@ -180,12 +172,7 @@ helper.decipher(secret).observeOn(AndroidSchedulers.mainThread()).bindToLifecycl
         is FingerprintHelper.Event.Help -> show(it.help)
         FingerprintHelper.Event.Failure -> handleFailure()
         is FingerprintHelper.Event.Error -> show(it.error)
-        is FingerprintHelper.Event.Success -> usePlain(it.result)
+        is FingerprintHelper.Event.Success -> usePlainSecret(it.result)
     }
 }
 ```
-
-## tools-rx-retrofit
-Needs RX and retrofit
-
-**RxCallAdapterFactory**: create a Retrofit call adapter factory for RX with the ability to add retry
