@@ -15,6 +15,7 @@ package com.wrabot.tools.rx
 
 import android.databinding.ViewDataBinding
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -40,10 +41,15 @@ open class RxSimpleAdapter<T : Any, U : ViewDataBinding>(
 ) : RxRecyclerAdapter<List<T>, BindingHolder<U>>(observable, initialValue) {
     @Suppress("MemberVisibilityCanBePrivate")
 
-    /**
-     * A subject which sends clicked items.
-     */
+            /**
+             * A subject which sends clicked items.
+             */
     val clicks: PublishSubject<T> = PublishSubject.create()
+
+    /**
+     * A subject which sends clicked items with position and view.
+     */
+    val clickEvents: PublishSubject<Triple<T, Int, View>> = PublishSubject.create()
 
     init {
         @Suppress("LeakingThis")
@@ -56,9 +62,13 @@ open class RxSimpleAdapter<T : Any, U : ViewDataBinding>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
         itemView.clicks()
-                .filter { adapterPosition in value.indices }
-                .map { value[adapterPosition] }
-                .bindToLifecycle(parent).subscribe(clicks)
+                .doOnNext {
+                    value.getOrNull(adapterPosition)?.run {
+                        clicks.onNext(this)
+                        clickEvents.onNext(Triple(this, adapterPosition, itemView))
+                    }
+                }
+                .bindToLifecycle(parent).subscribe()
     }
 
     override fun onBindViewHolder(holder: BindingHolder<U>, position: Int) {
