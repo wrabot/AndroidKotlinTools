@@ -43,6 +43,9 @@ In this example myString, myInt, myBool are retrieved and stored automatically i
 
 **Views utilities**: hide/show views easily (see KDoc).
 
+## tools-reflect
+**Suppressed**: checkNullable is no more needed since I used moshi (which handles mandatory members and default values) instead of Gson.
+
 ## tools-rx-base
 Needs only RX
 
@@ -66,6 +69,8 @@ ForegroundManager.foreground.subscribe {
     }
 }
 ```
+
+**DownloadManager.progress**: RX flowable which observes several downloads (see KDoc).
 
 ## tools-rx-databinding
 Needs RX and data binding
@@ -176,3 +181,6 @@ helper.decipher(secret).observeOn(AndroidSchedulers.mainThread()).bindToLifecycl
     }
 }
 ```
+
+## tools-rx-retrofit
+**Suppressed**: After thinking, this is simplest to use retrofit RX adapter and add a retryWhen when needed.
