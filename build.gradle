@@ -10,15 +10,14 @@ buildscript {
     ext.buildToolsVersion = '27.0.3'
     ext.minSdkVersion = 16
 
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.60'
     ext.support_version = '27.1.1'
     ext.rxandroid_version = '2.0.2'
-    ext.rxbinding_version = '2.0.0'
-    ext.rxlifecycle_version = '2.2.0'
-    ext.retrofit_version = '2.3.0'
+    ext.rxbinding_version = '2.1.1'
+    ext.rxlifecycle_version = '2.2.1'
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
    }
 }

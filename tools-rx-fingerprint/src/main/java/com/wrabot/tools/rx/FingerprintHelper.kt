@@ -82,7 +82,7 @@ class FingerprintHelper(context: Context, private val name: String = "FINGERPRIN
     @TargetApi(Build.VERSION_CODES.M)
     private fun authenticate(data: ByteArray, cipher: Cipher, result: (ByteArray) -> String): Observable<Event> {
         val cancellationSignal = CancellationSignal()
-        return Observable.create<Event>({
+        return Observable.create<Event> {
             try {
                 val crypto = FingerprintManagerCompat.CryptoObject(cipher)
                 val callback = object : FingerprintManagerCompat.AuthenticationCallback() {
@@ -108,7 +108,7 @@ class FingerprintHelper(context: Context, private val name: String = "FINGERPRIN
             } catch (error: Throwable) {
                 it.onError(error)
             }
-        }).doOnDispose { cancellationSignal.cancel() }
+        }.doOnDispose { cancellationSignal.cancel() }
     }
 
     @TargetApi(Build.VERSION_CODES.M)

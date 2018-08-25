@@ -18,8 +18,6 @@ package com.wrabot.tools
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 
-fun <T : Any> T.println() = apply { println(this) }
-
 /**
  * Creates SpannableStringBuilder from a [text] with several [spans].
  */

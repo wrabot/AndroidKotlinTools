@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -9,11 +10,16 @@ android {
         buildToolsVersion rootProject.ext.buildToolsVersion
     }
 
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+
     dataBinding.enabled = true
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
     implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rxlifecycle_version"
     implementation "com.android.support:support-v4:$support_version"
