@@ -16,6 +16,7 @@
 package com.wrabot.tools
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import java.util.*
 import kotlin.reflect.KProperty
 
@@ -44,15 +45,13 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
      *
      * @property exceptions the property names to excluded from clear.
      */
-    fun clear(vararg exceptions: String) = sharedPreferences.edit().apply {
-        if (exceptions.isEmpty())
+    fun clear(vararg exceptions: String) = sharedPreferences.edit {
+        if (exceptions.isEmpty()) {
             clear()
-        else
-            sharedPreferences.all.keys.forEach {
-                if (!exceptions.contains(it))
-                    remove(it)
-            }
-    }.apply()
+        } else {
+            sharedPreferences.all.keys.minus(exceptions).forEach { remove(it) }
+        }
+    }
 
     inner class StringDelegate(defaultValue: String = "")
         : PreferenceDelegate<String>(SharedPreferences::getString, defaultValue, SharedPreferences.Editor::putString)
@@ -80,8 +79,9 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
         var onModified: ((old: T, new: T) -> Boolean)? = null
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = sharedPreferences.get(property.name, defaultValue)
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
-            if (onModified?.invoke(sharedPreferences.get(property.name, defaultValue), value) != false)
-                sharedPreferences.edit().put(property.name, value).apply()
+            if (onModified?.invoke(sharedPreferences.get(property.name, defaultValue), value) != false) {
+                sharedPreferences.edit { put(property.name, value) }
+            }
         }
     }
 }
