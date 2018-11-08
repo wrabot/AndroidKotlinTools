@@ -37,7 +37,7 @@ class MyPreferencesManager(context: Context) : SharedPreferencesManager(context.
 
 In this example myString, myInt, myBool are retrieved and stored automatically in shared preferences with this names.
 
-**SpannableStringBuilder extensions**: create spannable easily with multiple spans on a text (see KDoc).
+**SpannableStringBuilder extensions**: deprecated (exists in ktx)
 
 **Throwable extension**: find a cause with a predicate (see KDoc).
 

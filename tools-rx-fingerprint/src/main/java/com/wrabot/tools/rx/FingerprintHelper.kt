@@ -18,9 +18,9 @@ import android.content.Context
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties.*
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
-import android.support.v4.os.CancellationSignal
 import android.util.Base64
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat
+import androidx.core.os.CancellationSignal
 import io.reactivex.Observable
 import java.nio.charset.Charset
 import java.security.KeyStore
@@ -69,12 +69,10 @@ class FingerprintHelper(context: Context, private val name: String = "FINGERPRIN
      * @param cipher the ciphered string
      * @return Observable<Event> which completes when deciphering finishes
      */
-    fun decipher(cipher: String?) = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) null else {
-        cipher?.let {
-            it.split(' ').takeIf { it.size == 2 }?.let {
-                authenticate(it[0].fromBase64(), createCipher(Cipher.DECRYPT_MODE, IvParameterSpec(it[1].fromBase64()))) {
-                    it.toString(Charset.defaultCharset())
-                }
+    fun decipher(cipher: String?) = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || cipher == null) null else {
+        cipher.splitToSequence(' ').map { it.fromBase64() }.zipWithNext().first().let { (data, iv) ->
+            authenticate(data, createCipher(Cipher.DECRYPT_MODE, IvParameterSpec(iv))) {
+                it.toString(Charset.defaultCharset())
             }
         }
     }

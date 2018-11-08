@@ -29,7 +29,7 @@ object ForegroundManager : Application.ActivityLifecycleCallbacks {
      * Subscribe to this subject to receive background/foreground events.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    val foreground = BehaviorSubject.createDefault(false)!!
+    val foreground = BehaviorSubject.createDefault(false)
 
     private var startedActivityCount = 0
 
