@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        buildToolsVersion rootProject.ext.buildToolsVersion
+    }
+
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
+    }
+
+    dataBinding.enabled = true
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:$ktx_core_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+}
