@@ -6,12 +6,13 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion rootProject.ext._minSdkVersion
         buildToolsVersion rootProject.ext.buildToolsVersion
     }
 
-    libraryVariants.all {
-        it.generateBuildConfig.enabled = false
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     dataBinding.enabled = true
