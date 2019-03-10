@@ -17,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 
@@ -29,13 +31,16 @@ import androidx.recyclerview.widget.ListAdapter
 open class SimpleListAdapter<T : Any, U : ViewDataBinding>(
         private val inflate: (LayoutInflater, ViewGroup, Boolean) -> U,
         private val set: U.(T) -> Unit,
-        private val onClick: (T, Int, View) -> Unit = { _, _, _ -> },
-        private val isSame: (T, T) -> Boolean = { _, _ -> false },
-        private val isSameContent: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
+        isSame: (T, T) -> Boolean = { _, _ -> false },
+        isSameContent: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
 ) : ListAdapter<T, BindingHolder<U>>(object : ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T) = isSame(oldItem, newItem)
     override fun areContentsTheSame(oldItem: T, newItem: T) = isSameContent(oldItem, newItem)
 }) {
+    private var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
+
+    fun observe(data: LiveData<List<T>>, lifecycle: Lifecycle) = data.observe({ lifecycle }) { submitList(it) }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
         itemView.setOnClickListener {
             onClick(getItem(adapterPosition), adapterPosition, it)
