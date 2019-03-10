@@ -37,7 +37,7 @@ open class SimpleListAdapter<T : Any, U : ViewDataBinding>(
     override fun areItemsTheSame(oldItem: T, newItem: T) = isSame(oldItem, newItem)
     override fun areContentsTheSame(oldItem: T, newItem: T) = isSameContent(oldItem, newItem)
 }) {
-    private var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
+    var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
     fun observe(data: LiveData<List<T>>, lifecycle: Lifecycle) = data.observe({ lifecycle }) { submitList(it) }
 
