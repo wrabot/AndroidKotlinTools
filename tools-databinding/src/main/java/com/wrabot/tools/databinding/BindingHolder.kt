@@ -24,13 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class BindingHolder<out T : ViewDataBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root), LifecycleOwner {
     private val lifecycleRegistry = LifecycleRegistry(this)
-
     override fun getLifecycle() = lifecycleRegistry
-
-    init {
-        lifecycleRegistry.markState(Lifecycle.State.INITIALIZED)
-    }
-
-    fun onAttach() = lifecycleRegistry.markState(Lifecycle.State.CREATED)
+    fun onAttach() = lifecycleRegistry.markState(Lifecycle.State.STARTED)
     fun onDetach() = lifecycleRegistry.markState(Lifecycle.State.DESTROYED)
 }
