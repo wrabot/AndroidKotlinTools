@@ -14,9 +14,23 @@
 package com.wrabot.tools.databinding
 
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * A ViewHolder which contains the binding.
+ * A ViewHolder which contains the binding and lifecycle.
  */
-class BindingHolder<out T : ViewDataBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root)
+class BindingHolder<out T : ViewDataBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root), LifecycleOwner {
+    private val lifecycleRegistry = LifecycleRegistry(this)
+
+    override fun getLifecycle() = lifecycleRegistry
+
+    init {
+        lifecycleRegistry.markState(Lifecycle.State.INITIALIZED)
+    }
+
+    fun onAttach() = lifecycleRegistry.markState(Lifecycle.State.CREATED)
+    fun onDetach() = lifecycleRegistry.markState(Lifecycle.State.DESTROYED)
+}

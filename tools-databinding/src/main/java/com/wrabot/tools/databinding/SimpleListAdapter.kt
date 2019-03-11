@@ -17,10 +17,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
+import java.lang.ref.WeakReference
 
 /**
  * A ListAdapter adapter which uses data binding for items and lambdas for callbacks.
@@ -39,9 +39,8 @@ open class SimpleListAdapter<T : Any, U : ViewDataBinding>(
 }) {
     var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
-    fun observe(data: LiveData<List<T>>, lifecycle: Lifecycle) = data.observe({ lifecycle }) { submitList(it) }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
+        binding.lifecycleOwner = this
         itemView.setOnClickListener {
             onClick(getItem(adapterPosition), adapterPosition, it)
         }
@@ -51,4 +50,7 @@ open class SimpleListAdapter<T : Any, U : ViewDataBinding>(
         holder.binding.set(getItem(position))
         holder.binding.executePendingBindings()
     }
+
+    override fun onViewAttachedToWindow(holder: BindingHolder<U>) = holder.onAttach()
+    override fun onViewDetachedFromWindow(holder: BindingHolder<U>) = holder.onDetach()
 }
