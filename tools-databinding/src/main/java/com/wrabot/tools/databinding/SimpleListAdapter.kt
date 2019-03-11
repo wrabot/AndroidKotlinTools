@@ -17,10 +17,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
-import java.lang.ref.WeakReference
 
 /**
  * A ListAdapter adapter which uses data binding for items and lambdas for callbacks.
