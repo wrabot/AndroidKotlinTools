@@ -25,6 +25,8 @@ Add the needed dependencies (just one or several)
 ## tools-base
 Needs no dependencies or permissions
 
+**enumValueOrDefault** : parse enum with default value
+
 **ForegroundManager**: create an object which detects application background/foreground
 
 Add the following line in your application class
@@ -147,6 +149,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
 Needs only RX
 
 **DownloadManager.progress**: RX flowable which observes several downloads (see KDoc).
+
+**RxViewModel,RxAndroidViewModel** : ViewModel with a disposable automatically cleared
 
 **ForegroundManager**: Deprecated see tools-base
 
