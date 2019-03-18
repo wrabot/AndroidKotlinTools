@@ -129,15 +129,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
     ...
     recycler_view.adapter = SimpleListAdapter(ItemBinding::inflate, ItemBinding::setItem).apply {
         data.observe({livecycle}) {submitList(it)}
-    }
-}
-```
-
-SimpleListAdapter provides also onClick variable which allow to handle clicks on items
-```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    ...
-    recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem, Item::id).apply {
         onClick = { item, position, view -> println("$item at $position in $view is clicked") }
     }
 }
