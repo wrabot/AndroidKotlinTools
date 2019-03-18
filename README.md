@@ -133,14 +133,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-SimpleListAdapter provides also PublishSubject called "clicks" or "clickEvents" which allow to handle clicks on items
+SimpleListAdapter provides also onClick variable which allow to handle clicks on items
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     ...
     recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem, Item::id).apply {
-        clicks.bindToLifecycle(this@MyActivity).subscribe {
-            println("${it.title} is clicked")
-        }
+        onClick = { item, position, view -> println("$item at $position in $view is clicked") }
     }
 }
 ```
