@@ -12,9 +12,9 @@ buildscript {
 
     ext.kotlin_version = '1.3.21'
     ext.ktx_core_version = '1.0.1'
-    ext.recyclerview_version = '1.0.0'
-    ext.rxandroid_version = '2.1.1'
     ext.lifecycle_version = '2.0.0'
+    ext.recyclerview_version = '1.0.0'
+    ext.rxjava_version = '2.2.7'
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
