@@ -24,6 +24,7 @@ import io.reactivex.subjects.BehaviorSubject
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
+@Deprecated(message = "replace with com.wrabot.tools.ForegroundManager")
 object ForegroundManager : Application.ActivityLifecycleCallbacks {
     /**
      * Subscribe to this subject to receive background/foreground events.
