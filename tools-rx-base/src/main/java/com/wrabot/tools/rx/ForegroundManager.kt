@@ -13,9 +13,7 @@
 
 package com.wrabot.tools.rx
 
-import android.app.Activity
-import android.app.Application
-import android.os.Bundle
+import com.wrabot.tools.ForegroundDetector
 import io.reactivex.subjects.BehaviorSubject
 
 /**
@@ -24,31 +22,12 @@ import io.reactivex.subjects.BehaviorSubject
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
-@Deprecated(message = "replace with com.wrabot.tools.ForegroundManager")
-object ForegroundManager : Application.ActivityLifecycleCallbacks {
+object ForegroundManager {
+    private val detector = ForegroundDetector { foreground.onNext(it) }
+
     /**
      * Subscribe to this subject to receive background/foreground events.
      */
     @Suppress("MemberVisibilityCanBePrivate")
     val foreground = BehaviorSubject.createDefault(false)
-
-    private var startedActivityCount = 0
-
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
-
-    override fun onActivityStarted(activity: Activity) {
-        if (startedActivityCount++ == 0)
-            foreground.onNext(true)
-    }
-
-    override fun onActivityResumed(activity: Activity) = Unit
-    override fun onActivitySaveInstanceState(activity: Activity, savedInstanceState: Bundle?) = Unit
-    override fun onActivityPaused(activity: Activity) = Unit
-
-    override fun onActivityStopped(activity: Activity) {
-        if (--startedActivityCount == 0)
-            foreground.onNext(false)
-    }
-
-    override fun onActivityDestroyed(activity: Activity) = Unit
 }

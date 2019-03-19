@@ -135,13 +135,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ```
 
 ## tools-rx-base
-Needs only RX
+Needs only RX (depends on tools-base)
 
 **DownloadManager.progress**: RX flowable which observes several downloads (see KDoc).
 
 **RxViewModel,RxAndroidViewModel** : ViewModel with a disposable automatically cleared
 
-**ForegroundManager**: Deprecated see tools-base
+**ForegroundManager**: see tools-base : this is the same with RX subject instead of LiveData
 
 ## tools-rx-databinding
 **Will be replaced by SimpleListAdapter**

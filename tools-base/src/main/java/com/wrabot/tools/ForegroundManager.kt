@@ -13,10 +13,6 @@
 
 package com.wrabot.tools
 
-import android.app.Activity
-import android.app.Application
-import android.os.Bundle
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -25,31 +21,12 @@ import androidx.lifecycle.MutableLiveData
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
-object ForegroundManager : Application.ActivityLifecycleCallbacks {
-    private val isForeground = MutableLiveData<Boolean>()
-    private var startedActivityCount = 0
+object ForegroundManager {
+    private val detector = ForegroundDetector { foreground.postValue(it) }
 
     /**
-     * Subscribe to this subject to receive background/foreground events.
+     * Observe to receive background/foreground events.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    val foreground: LiveData<Boolean> = isForeground
-
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
-
-    override fun onActivityStarted(activity: Activity) {
-        if (startedActivityCount++ == 0)
-            isForeground.postValue(true)
-    }
-
-    override fun onActivityResumed(activity: Activity) = Unit
-    override fun onActivitySaveInstanceState(activity: Activity, savedInstanceState: Bundle?) = Unit
-    override fun onActivityPaused(activity: Activity) = Unit
-
-    override fun onActivityStopped(activity: Activity) {
-        if (--startedActivityCount == 0)
-            isForeground.postValue(false)
-    }
-
-    override fun onActivityDestroyed(activity: Activity) = Unit
+    val foreground = MutableLiveData<Boolean>()
 }
