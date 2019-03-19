@@ -143,6 +143,21 @@ Needs only RX (depends on tools-base)
 
 **ForegroundManager**: see tools-base : this is the same with RX subject instead of LiveData
 
+**View.animate**: animate view with rx
+```kotlin
+// define generic animation with View.animate which returns a Completable
+fun View.fadeIn(duration: Long) = animate {
+    setDuration(duration)
+    alpha(1f)
+}
+
+// use rx to compose animations
+val animation = view1.fadeIn(1000).andThen(view2.fadeIn(500))
+
+// start animation
+animation.subscribe()
+```
+
 ## tools-rx-databinding
 **Will be replaced by SimpleListAdapter**
 Needs RX and data binding
