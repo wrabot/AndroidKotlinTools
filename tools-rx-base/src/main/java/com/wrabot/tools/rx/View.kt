@@ -9,8 +9,8 @@ import io.reactivex.Completable
 
 fun View.animate(init: ViewPropertyAnimatorCompat.() -> Unit): Completable = Completable.create {
     with(ViewCompat.animate(this)) {
-        withEndAction { it.onComplete() }
-        it.setCancellable(this::cancel)
+        withEndAction(it::onComplete)
+        it.setCancellable(::cancel)
         init()
         start()
     }
