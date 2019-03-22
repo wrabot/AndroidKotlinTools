@@ -11,10 +11,9 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.wrabot.tools.rx
+package com.wrabot.tools
 
-import com.wrabot.tools.ForegroundDetector
-import io.reactivex.subjects.BehaviorSubject
+import androidx.lifecycle.MutableLiveData
 
 /**
  * Detects application background/foreground.
@@ -23,11 +22,11 @@ import io.reactivex.subjects.BehaviorSubject
  */
 @Suppress("unused")
 object ForegroundManager {
-    private val detector = ForegroundDetector { foreground.onNext(it) }
+    private val detector = ForegroundDetector { foreground.postValue(it) }
 
     /**
-     * Subscribe to this subject to receive background/foreground events.
+     * Observe to receive background/foreground events.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    val foreground = BehaviorSubject.createDefault(false)
+    val foreground = MutableLiveData<Boolean>()
 }

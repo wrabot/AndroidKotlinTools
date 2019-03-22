@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -21,6 +20,4 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.2'
 }
