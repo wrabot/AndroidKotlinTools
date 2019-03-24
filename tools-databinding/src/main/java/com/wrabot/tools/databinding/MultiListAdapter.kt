@@ -27,9 +27,9 @@ import androidx.recyclerview.widget.ListAdapter
  * Items must inherits from Item class
  */
 @Suppress("unused")
-open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any>, BindingHolder<ViewDataBinding>>(object : ItemCallback<MultiListAdapter.Item<out Any>>() {
-    override fun areItemsTheSame(oldItem: MultiListAdapter.Item<out Any>, newItem: MultiListAdapter.Item<out Any>) = newItem.isSameItem(oldItem)
-    override fun areContentsTheSame(oldItem: MultiListAdapter.Item<out Any>, newItem: MultiListAdapter.Item<out Any>) = newItem.isSameContent(oldItem)
+open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any>, BindingHolder<ViewDataBinding>>(object : ItemCallback<Item<out Any>>() {
+    override fun areItemsTheSame(oldItem: Item<out Any>, newItem: Item<out Any>) = newItem.isSameItem(oldItem)
+    override fun areContentsTheSame(oldItem: Item<out Any>, newItem: Item<out Any>) = newItem.isSameContent(oldItem)
 }) {
     @Suppress("MemberVisibilityCanBePrivate")
     open class Item<T>(val content: T, @LayoutRes val layoutId: Int, val variableId: Int) {
@@ -39,10 +39,12 @@ open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any>, Bindin
 
         // internal methods to convert generic items
         internal fun isSameItem(oldItem: Item<out Any>) = getContent(oldItem)?.let(isSameItem) ?: false
+
         internal fun isSameContent(oldItem: Item<out Any>) = getContent(oldItem)?.let(isSameContent) ?: false
 
         // internal methods to useful for adapter
         internal fun onClick(position: Int, view: View) = onClick(content, position, view)
+
         internal fun bindTo(binding: ViewDataBinding) = binding.setVariable(variableId, content)
 
         // Gets the content of an item if the current item is compatible with the given item
