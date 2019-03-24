@@ -15,11 +15,11 @@ Add the following repository
 Add the needed dependencies (just one or several)
 
     dependencies {
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.6'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.6'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.6'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.6'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.6'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.7'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.7'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.7'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.7'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.7'
     }
     
 ## tools-base
@@ -68,9 +68,9 @@ In this example myString, myInt, myBool are retrieved and stored automatically i
 ## tools-databinding
 Needs data binding
 
-**SimpleListAdapter**: use easily recycler views with adapter and LiveData
+**SimpleListAdapter**: use easily recycler views with adapter and LiveData for one item type
 
-This adapter allows automatic updates updates through LiveData and easy item provisioning with data binding
+This adapter allows automatic updates through LiveData and easy item provisioning with data binding
 
 The item POJO :
 ```kotlin
@@ -125,13 +125,62 @@ val data = MutableLiveData<List<Item>>()
 
 Once, define the adapter
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    ...
-    recycler_view.adapter = SimpleListAdapter(ItemBinding::inflate, ItemBinding::setItem).apply {
-        viewModel.data.observe({livecycle}) {submitList(it)}
-        onClick = { item, position, view -> println("$item at $position in $view is clicked") }
-    }
+recycler_view.adapter = SimpleListAdapter(ItemBinding::inflate, ItemBinding::setItem).apply {
+    viewModel.data.observe({livecycle}) {submitList(it)}
+    onClick = { item, position, view -> println("$item at $position in $view is clicked") }
 }
+```
+
+**MultiListAdapter**: use easily recycler views with adapter and LiveData for several item type
+
+This adapter allows automatic updates through LiveData and easy item provisioning with data binding
+
+The item layout described with data binding :
+
+- layout item1
+```xml
+<layout>
+
+    <data>
+        <variable
+            name="item1"
+            type="com.example.Item1"/>
+    </data>
+    
+    ...
+
+</layout>
+```
+
+- layout item2
+```xml
+<layout>
+
+    <data>
+        <variable
+            name="item2"
+            type="com.example.Item2"/>
+    </data>
+    
+    ...
+
+</layout>
+```
+
+The item declarations with content, layout Id, and variable Id for data binding :
+```kotlin
+data class Item1(content : Item1) : MultiListAdapter.Item<Item1>(content, R.layout.item1, BR.item1)
+data class Item2(content : Item2) : MultiListAdapter.Item<Item2>(content, R.layout.item2, BR.item2)
+```
+
+Once, define the adapter
+```kotlin
+recycler_view.adapter = MultiListAdapter()
+```
+
+Update adapter a list of Item1 and/or Item2
+```kotlin
+adapter.submitList(listOf(item1a, item2a, item1b))
 ```
 
 ## tools-rx-base
@@ -159,7 +208,7 @@ animation.subscribe()
 ```
 
 ## tools-rx-databinding
-**Will be replaced by SimpleListAdapter**
+**Will be replaced by SimpleListAdapter/MultiListAdapter**
 Needs RX and data binding
 
 **RxSimpleAdapter**: use easily recycler views with RX adapter
@@ -175,21 +224,13 @@ val subject = BehaviorSubject<List<Item>>.create()
 
 Once, only one line to define the adapter
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    ...
-    recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem)
-}
+recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem)
 ```
 
 RxSimpleAdapter provides also PublishSubject called "clicks" or "clickEvents" which allow to handle clicks on items
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    ...
-    recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem, Item::id).apply {
-        clicks.bindToLifecycle(this@MyActivity).subscribe {
-            println("${it.title} is clicked")
-        }
-    }
+adapter.clicks.bindToLifecycle(this@MyActivity).subscribe {
+    println("${it.title} is clicked")
 }
 ```
 
@@ -197,7 +238,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
 Needs RX and USE_FINGERPRINT permission
 
 **FingerPrintHelper**: cipher and decipher data with fingerprint through RX
-
 
 ```kotlin
 val helper = FingerprintHelper(context)
