@@ -34,7 +34,7 @@ Add the following line in your application class
 open class MyApp : Application() {
     override fun onCreate() {
         ...
-        registerActivityLifecycleCallbacks(ForegroundManager)
+        registerActivityLifecycleCallbacks(ForegroundManager.detector)
     }
 }
 ```

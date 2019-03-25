@@ -23,7 +23,7 @@ import io.reactivex.subjects.BehaviorSubject
  */
 @Suppress("unused")
 object ForegroundManager {
-    private val detector = ForegroundDetector { foreground.onNext(it) }
+    val detector = ForegroundDetector { foreground.onNext(it) }
 
     /**
      * Subscribe to this subject to receive background/foreground events.
