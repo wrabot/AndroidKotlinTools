@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
  * ViewModel with a disposable automatically cleared
  */
 @Suppress("unused")
-class RxViewModel : ViewModel() {
+open class RxViewModel : ViewModel() {
     @Suppress("MemberVisibilityCanBePrivate")
     val disposable = CompositeDisposable()
 
@@ -23,7 +23,7 @@ class RxViewModel : ViewModel() {
  * AndroidViewModel with a disposable automatically cleared
  */
 @Suppress("unused")
-class RxAndroidViewModel(application: Application) : AndroidViewModel(application) {
+open class RxAndroidViewModel(application: Application) : AndroidViewModel(application) {
     @Suppress("MemberVisibilityCanBePrivate")
     val disposable = CompositeDisposable()
 
