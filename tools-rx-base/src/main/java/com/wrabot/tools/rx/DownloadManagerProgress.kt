@@ -42,7 +42,7 @@ const val progressIndeterminate = -1
 @Suppress("unused")
 fun DownloadManager.progress(vararg downloadIds: Long) = Flowable.interval(1, TimeUnit.SECONDS).map {
     query(DownloadManager.Query().setFilterById(*downloadIds)).use { cursor -> if (cursor.count < downloadIds.size) progressIndeterminate else cursor.progress() }
-}.takeWhile { it <= progressMax }!!
+}.takeWhile { it <= progressMax }
 
 private fun Cursor.progress(): Int {
     var successCount = 0

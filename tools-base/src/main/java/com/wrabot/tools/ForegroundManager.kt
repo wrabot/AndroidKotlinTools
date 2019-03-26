@@ -22,7 +22,7 @@ import androidx.lifecycle.MutableLiveData
  */
 @Suppress("unused")
 object ForegroundManager {
-    private val detector = ForegroundDetector { foreground.postValue(it) }
+    val detector = ForegroundDetector { foreground.postValue(it) }
 
     /**
      * Observe to receive background/foreground events.
