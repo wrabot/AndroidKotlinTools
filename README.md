@@ -15,11 +15,11 @@ Add the following repository
 Add the needed dependencies (just one or several)
 
     dependencies {
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.9'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.9'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.9'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.9'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.9'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.8'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.8'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.8'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.8'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.8'
     }
     
 ## tools-base
