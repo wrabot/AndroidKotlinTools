@@ -27,26 +27,8 @@ Needs no dependencies or permissions
 
 **enumValueOrDefault** : parse enum with default value
 
-**ForegroundManager**: create an object which detects application background/foreground
-
-Add the following line in your application class
-```kotlin
-open class MyApp : Application() {
-    override fun onCreate() {
-        ...
-        registerActivityLifecycleCallbacks(ForegroundManager.detector)
-    }
-}
-```
-
-Anywhere in the application, an background/foreground event can be receive
-```kotlin
-ForegroundManager.foreground.observeForever {
-    if (foreground) {
-    } else { 
-    }
-}
-```
+**ForegroundManager**
+**Deprecated : use ProcessLifecycleOwner**
 
 **SharedPreferencesManager**: map kotlin properties to SharedPreferences easily.
 
@@ -190,7 +172,8 @@ Needs only RX (depends on tools-base)
 
 **RxViewModel,RxAndroidViewModel** : ViewModel with a disposable automatically cleared
 
-**ForegroundManager**: see tools-base : this is the same with RX subject instead of LiveData
+**ForegroundManager**
+**Deprecated : use ProcessLifecycleOwner**
 
 **View.animate**: animate view with rx
 ```kotlin
@@ -208,7 +191,8 @@ animation.subscribe()
 ```
 
 ## tools-rx-databinding
-**Will be replaced by SimpleListAdapter/MultiListAdapter**
+**Deprecated : use SimpleListAdapter/MultiListAdapter**
+
 Needs RX and data binding
 
 **RxSimpleAdapter**: use easily recycler views with RX adapter
@@ -235,32 +219,4 @@ adapter.clicks.bindToLifecycle(this@MyActivity).subscribe {
 ```
 
 ## tools-rx-fingerprint
-Needs RX and USE_FINGERPRINT permission
-
-**FingerPrintHelper**: cipher and decipher data with fingerprint through RX
-
-```kotlin
-val helper = FingerprintHelper(context)
-```
-
-```kotlin
-helper.cipher(plain).observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this).subscribe {
-    when (it) {
-        is FingerprintHelper.Event.Help -> show(it.help)
-        FingerprintHelper.Event.Failure -> handleFailure()
-        is FingerprintHelper.Event.Error -> show(it.error)
-        is FingerprintHelper.Event.Success -> storeCipheredSecret(it.result)
-    }
-}
-```
-
-```kotlin
-helper.decipher(secret).observeOn(AndroidSchedulers.mainThread()).bindToLifecycle(this).subscribe {
-    when (it) {
-        is FingerprintHelper.Event.Help -> show(it.help)
-        FingerprintHelper.Event.Failure -> handleFailure()
-        is FingerprintHelper.Event.Error -> show(it.error)
-        is FingerprintHelper.Event.Success -> usePlainSecret(it.result)
-    }
-}
-```
+**Deprecated : use FingerprintPrompt**
