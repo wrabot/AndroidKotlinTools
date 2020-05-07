@@ -14,6 +14,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
    }
 }
@@ -29,6 +30,9 @@ subprojects {
     apply plugin: 'com.android.library'
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-kapt'
+    apply plugin: 'com.github.dcendents.android-maven'
+
+    group='com.github.wrabot'
 
     android {
         compileSdkVersion 29
@@ -43,8 +47,6 @@ subprojects {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
-
-        dataBinding.enabled = true
     }
 
     dependencies {
