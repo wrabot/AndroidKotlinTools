@@ -53,8 +53,8 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
         }
     }
 
-    inner class StringDelegate(defaultValue: String = "")
-        : PreferenceDelegate<String>(SharedPreferences::getString, defaultValue, SharedPreferences.Editor::putString)
+    inner class StringDelegate(defaultValue: String? = "")
+        : PreferenceDelegate<String?>(SharedPreferences::getString, defaultValue, SharedPreferences.Editor::putString)
 
     inner class BooleanDelegate(defaultValue: Boolean = false)
         : PreferenceDelegate<Boolean>(SharedPreferences::getBoolean, defaultValue, SharedPreferences.Editor::putBoolean)
@@ -68,8 +68,8 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
     inner class FloatDelegate(defaultValue: Float = 0f)
         : PreferenceDelegate<Float>(SharedPreferences::getFloat, defaultValue, SharedPreferences.Editor::putFloat)
 
-    inner class StringSetDelegate(defaultValue: Set<String> = Collections.emptySet())
-        : PreferenceDelegate<Set<String>>(SharedPreferences::getStringSet, defaultValue, SharedPreferences.Editor::putStringSet)
+    inner class StringSetDelegate(defaultValue: Set<String>? = Collections.emptySet())
+        : PreferenceDelegate<Set<String>?>(SharedPreferences::getStringSet, defaultValue, SharedPreferences.Editor::putStringSet)
 
     open inner class PreferenceDelegate<T>(
             private val get: SharedPreferences.(String, T) -> T,

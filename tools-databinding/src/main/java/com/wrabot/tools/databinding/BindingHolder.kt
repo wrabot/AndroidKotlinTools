@@ -26,7 +26,7 @@ class BindingHolder<out T : ViewDataBinding>(val binding: T) : RecyclerView.View
     private val lifecycleRegistry = LifecycleRegistry(this)
     override fun getLifecycle() = lifecycleRegistry
     fun onAttach() = lifecycleRegistry.markState(Lifecycle.State.STARTED)
-    fun onDetach() = lifecycleRegistry.markState(Lifecycle.State.DESTROYED)
+    fun onDetach() = lifecycleRegistry.markState(Lifecycle.State.CREATED)
 
     init {
         binding.lifecycleOwner = this
