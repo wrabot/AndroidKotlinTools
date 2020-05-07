@@ -14,7 +14,7 @@ before_install:
 - yes | sdkmanager "platforms;android-27"
 
 script:
-- ./gradlew build
+- ./gradlew assemble
 
 branches:
   except:
