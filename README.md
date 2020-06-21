@@ -174,7 +174,11 @@ This adapter allows automatic updates through LiveData and easy item provisionin
 
 The item POJO :
 ```kotlin
-data class Item(val text : String)
+data class Item(val text : String) {
+    fun bind(binding: ItemBinding) {
+        binding.text.text = text
+    }
+}
 ```
 
 The item layout described with data binding :
@@ -213,9 +217,7 @@ val data = MutableLiveData<List<Item>>()
 
 Once, define the adapter
 ```kotlin
-recycler_view.adapter = SimpleListAdapter(ItemBinding::inflate) { binding, item ->
-    binding.text = item.text
-}.apply {
+recycler_view.adapter = SimpleListAdapter(ItemBinding::inflate, Item::bind).apply {
     viewModel.data.observe({livecycle}) {submitList(it)}
     onClick = { item, position, view -> println("$item at $position in $view is clicked") }
 }
