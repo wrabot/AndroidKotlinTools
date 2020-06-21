@@ -29,7 +29,7 @@ import androidx.viewbinding.ViewBinding
 @Suppress("unused")
 open class SimpleListAdapter<T : Any, U : ViewBinding>(
         private val inflate: (LayoutInflater, ViewGroup, Boolean) -> U,
-        private val bind: (binding: U, item: T) -> Unit,
+        private val bind: T.(binding: U) -> Unit,
         isSame: (T, T) -> Boolean = { _, _ -> false },
         isSameContent: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
 ) : ListAdapter<T, SimpleListAdapter.BindingHolder<U>>(object : ItemCallback<T>() {
@@ -48,5 +48,5 @@ open class SimpleListAdapter<T : Any, U : ViewBinding>(
             }
 
     override fun onBindViewHolder(holder: BindingHolder<U>, position: Int) =
-            bind(holder.binding, getItem(position))
+            getItem(position).bind(holder.binding)
 }
