@@ -1,0 +1,7 @@
+android {
+    buildFeatures.viewBinding true
+}
+
+dependencies {
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+}
