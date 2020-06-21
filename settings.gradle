@@ -1,1 +1,1 @@
-include ':tools-base', ':tools-databinding', ':tools-rx-base', ':tools-rx-databinding', ':tools-rx-fingerprint'
+include ':tools-base', ':tools-databinding', ':tools-viewbinding', ':tools-rx-base', ':tools-rx-databinding', ':tools-rx-fingerprint'
