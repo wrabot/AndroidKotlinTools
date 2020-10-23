@@ -21,6 +21,7 @@ import androidx.lifecycle.MutableLiveData
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
+@Deprecated("Use ProcessLifecycleOwner")
 object ForegroundManager {
     val detector = ForegroundDetector { foreground.postValue(it) }
 

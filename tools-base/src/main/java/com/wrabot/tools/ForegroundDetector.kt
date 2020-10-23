@@ -23,6 +23,7 @@ import android.os.Bundle
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
+@Deprecated("Use ProcessLifecycleOwner")
 class ForegroundDetector(val onChanged: (Boolean) -> Unit) : Application.ActivityLifecycleCallbacks {
     private var startedActivityCount = 0
 

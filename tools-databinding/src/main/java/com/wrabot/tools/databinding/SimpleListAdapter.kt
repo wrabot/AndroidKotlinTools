@@ -38,7 +38,10 @@ open class SimpleListAdapter<T : Any, U : ViewDataBinding>(
     var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
-        itemView.setOnClickListener { onClick(getItem(adapterPosition), adapterPosition, it) }
+        itemView.setOnClickListener {
+            val item = currentList.getOrNull(adapterPosition) ?: return@setOnClickListener
+            onClick(item, adapterPosition, it)
+        }
     }
 
     override fun onBindViewHolder(holder: BindingHolder<U>, position: Int) {
