@@ -22,6 +22,7 @@ import io.reactivex.subjects.BehaviorSubject
  * registerActivityLifecycleCallbacks(ForegroundManager)
  */
 @Suppress("unused")
+@Deprecated("Use ProcessLifecycleOwner")
 object ForegroundManager {
     val detector = ForegroundDetector { foreground.onNext(it) }
 
