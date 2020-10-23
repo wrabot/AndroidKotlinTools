@@ -56,7 +56,10 @@ open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any>, Bindin
     override fun getItemViewType(position: Int) = getItem(position).layoutId
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BindingHolder(inflate(viewType, parent)).apply {
-        itemView.setOnClickListener { getItem(adapterPosition).onClick(adapterPosition, it) }
+        itemView.setOnClickListener {
+            val item = currentList.getOrNull(adapterPosition) ?: return@setOnClickListener
+            item.onClick(adapterPosition, it)
+        }
     }
 
     override fun onBindViewHolder(holder: BindingHolder<ViewDataBinding>, position: Int) = with(holder.binding) {
