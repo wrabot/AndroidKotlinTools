@@ -16,6 +16,11 @@
 package com.wrabot.tools
 
 /**
+ * Find the root cause.
+ */
+fun Throwable.rootCause(): Throwable = cause?.rootCause() ?: this
+
+/**
  * Find recursively a cause which complies to a [predicate].
  */
 fun Throwable.findCause(predicate: (Throwable) -> Boolean): Throwable? = cause?.let { if (predicate(it)) it else it.findCause(predicate) }

@@ -15,11 +15,10 @@ Add the following repository
 Add the needed dependencies (just one or several)
 
     dependencies {
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:0.10'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.10'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-base:0.10'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-databinding:0.10'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-rx-fingerprint:0.10'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-base:1.0'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-persistent:1.0'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:1.0'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-viewbinding:1.0'
     }
     
 ## tools-base
@@ -27,8 +26,12 @@ Needs no dependencies or permissions
 
 **enumValueOrDefault** : parse enum with default value
 
-**ForegroundManager**
-**Deprecated : use ProcessLifecycleOwner**
+**Throwable extensions**:
+*** find the root cause (see KDoc).
+*** find a cause with a predicate (see KDoc).
+
+## tools-persistent
+Needs no dependencies or permissions
 
 **SharedPreferencesManager**: map kotlin properties to SharedPreferences easily.
 
@@ -42,10 +45,6 @@ class MyPreferencesManager(context: Context) : SharedPreferencesManager(context.
 ```
 
 In this example myString, myInt, myBool are retrieved and stored automatically in shared preferences with this names.
-
-**Throwable extension**: find a cause with a predicate (see KDoc).
-
-**Views utilities**: hide/show views easily (see KDoc).
 
 ## tools-databinding
 Needs data binding
@@ -205,58 +204,58 @@ recyclerView.adapter = SimpleListAdapter(ItemBinding::inflate, Item::bind).apply
 }
 ```
 
-## tools-rx-base
-Needs only RX (depends on tools-base)
+**MultiListAdapter**: use easily recycler views with adapter and LiveData for several item type
 
-**DownloadManager.progress**: RX flowable which observes several downloads (see KDoc).
+This adapter allows automatic updates through LiveData and easy item provisioning with view binding
 
-**RxViewModel,RxAndroidViewModel** : ViewModel with a disposable automatically cleared
+The item layout described with data binding :
 
-**ForegroundManager**
-**Deprecated : use ProcessLifecycleOwner**
-
-**View.animate**: animate view with rx
+The item 1 POJO :
 ```kotlin
-// define generic animation with View.animate which returns a Completable
-fun View.fadeIn(duration: Long) = animate {
-    setDuration(duration)
-    alpha(1f)
-}
-
-// use rx to compose animations
-val animation = view1.fadeIn(1000).andThen(view2.fadeIn(500))
-
-// start animation
-animation.subscribe()
-```
-
-## tools-rx-databinding
-**Deprecated : use SimpleListAdapter/MultiListAdapter**
-
-Needs RX and data binding
-
-**RxSimpleAdapter**: use easily recycler views with RX adapter
-
-This adapter allows automatic updates updates through RX and easy item provisioning with data binding 
-
-See SimpleListAdapter for Item definition (POJO and layout)
-
-The subject (or the Observable) which will provided data
-```kotlin
-val subject = BehaviorSubject<List<Item>>.create()
-```
-
-Once, only one line to define the adapter
-```kotlin
-recycler_view.adapter = RxSimpleAdapter(subject, emptyList(), ItemBinding::inflate, ItemBinding::setItem)
-```
-
-RxSimpleAdapter provides also PublishSubject called "clicks" or "clickEvents" which allow to handle clicks on items
-```kotlin
-adapter.clicks.bindToLifecycle(this@MyActivity).subscribe {
-    println("${it.title} is clicked")
+data class Item1(val text : String) {
+    fun bind(binding: ItemBinding) {
+        binding.text.text = text
+    }
 }
 ```
 
-## tools-rx-fingerprint
-**Deprecated : use FingerprintPrompt**
+The item 1 layout described :
+```xml
+<TextView
+    android:id="@+id/text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+```
+
+The item 2 POJO :
+```kotlin
+data class Item2(val image : Drawable) {
+    fun bind(binding: ItemBinding) {
+        binding.image.setImageDrawable(image)
+    }
+}
+```
+
+The item 2 layout described :
+```xml
+<ImageView
+    android:id="@+id/image"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+```
+
+The item declarations with content, inflate method, and bind method :
+```kotlin
+data class Item1(content : Item1) : MultiListAdapter.Item<Item1>(content, Item1Binding::inflate, Item1::bind)
+data class Item2(content : Item2) : MultiListAdapter.Item<Item2>(content, Item2Binding::inflate, Item2::bind)
+```
+
+Once, define the adapter
+```kotlin
+recyclerVew.adapter = MultiListAdapter()
+```
+
+Update adapter a list of Item1 and/or Item2
+```kotlin
+adapter.submitList(listOf(item1a, item2a, item1b))
+```
