@@ -25,23 +25,23 @@ import androidx.viewbinding.ViewBinding
  * Items must inherits from Item class
  */
 @Suppress("unused")
-open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<Any, ViewBinding>, BindingHolder<ViewBinding>>(object : ItemCallback<Item<Any, ViewBinding>>() {
-    override fun areItemsTheSame(oldItem: Item<Any, ViewBinding>, newItem: Item<Any, ViewBinding>) = newItem.isSameItem(oldItem)
-    override fun areContentsTheSame(oldItem: Item<Any, ViewBinding>, newItem: Item<Any, ViewBinding>) = newItem.isSameContent(oldItem)
+open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any, out ViewBinding>, BindingHolder<ViewBinding>>(object : ItemCallback<Item<out Any, out ViewBinding>>() {
+    override fun areItemsTheSame(oldItem: Item<out Any, out ViewBinding>, newItem: Item<out Any, out ViewBinding>) = newItem.isSameItem(oldItem)
+    override fun areContentsTheSame(oldItem: Item<out Any, out ViewBinding>, newItem: Item<out Any, out ViewBinding>) = newItem.isSameContent(oldItem)
 }) {
     @Suppress("MemberVisibilityCanBePrivate")
     open class Item<T : Any, U : ViewBinding>(val content: T, val inflate: (LayoutInflater, ViewGroup, Boolean) -> U, val bind: T.(binding: U) -> Unit) {
-        var isSameItem: (T) -> Boolean = { content === it }
-        var isSameContent: (T) -> Boolean = { content == it }
+        var isSameItem: (Item<T, U>) -> Boolean = { content === it.content }
+        var isSameContent: (Item<T, U>) -> Boolean = { content == it.content }
         var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
         @Suppress("UNCHECKED_CAST")
         internal fun isSameItem(oldItem: Item<out Any, out ViewBinding>) =
-                (oldItem.content as? T)?.let(isSameItem) ?: false
+                (oldItem as? Item<T, U>)?.let(isSameItem) ?: false
 
         @Suppress("UNCHECKED_CAST")
         internal fun isSameContent(oldItem: Item<out Any, out ViewBinding>) =
-                (oldItem.content as? T)?.let(isSameContent) ?: false
+                (oldItem as? Item<T, U>)?.let(isSameContent) ?: false
 
         @Suppress("UNCHECKED_CAST")
         internal fun bind(binding: ViewBinding) {
