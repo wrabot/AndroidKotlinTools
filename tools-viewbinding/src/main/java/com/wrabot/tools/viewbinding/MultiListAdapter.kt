@@ -31,7 +31,7 @@ open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any, out Vie
 }) {
     @Suppress("MemberVisibilityCanBePrivate")
     open class Item<T : Any, U : ViewBinding>(val content: T, val inflate: (LayoutInflater, ViewGroup, Boolean) -> U, val bind: T.(binding: U) -> Unit) {
-        var isSameItem: (Item<T, U>) -> Boolean = { content === it.content }
+        var isSameItem: (Item<T, U>) -> Boolean = { false }
         var isSameContent: (Item<T, U>) -> Boolean = { content == it.content }
         var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
@@ -66,12 +66,10 @@ open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any, out Vie
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             BindingHolder(viewTypes[viewType](LayoutInflater.from(parent.context), parent, false)).apply {
                 itemView.setOnClickListener {
-                    val item = currentList.getOrNull(adapterPosition) ?: return@setOnClickListener
-                    item.onClick(adapterPosition, it)
+                    currentList.getOrNull(adapterPosition)?.onClick(adapterPosition, it)
                 }
             }
 
-    override fun onBindViewHolder(holder: BindingHolder<ViewBinding>, position: Int) {
-        getItem(position).bind(holder.binding)
-    }
+    override fun onBindViewHolder(holder: BindingHolder<ViewBinding>, position: Int) =
+            getItem(position).bind(holder.binding)
 }
