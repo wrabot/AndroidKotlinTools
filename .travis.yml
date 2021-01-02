@@ -4,14 +4,14 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-27.0.3
-    - android-27
+    - build-tools-30.0.3
+    - android-30
     - extra-android-m2repository
 
 jdk: oraclejdk8
 
 before_install:
-- yes | sdkmanager "platforms;android-27"
+- yes | sdkmanager "platforms;android-30"
 
 script:
 - ./gradlew assemble
@@ -36,7 +36,7 @@ deploy:
   file:
   - "tools-*/build/outputs/aar/tools-*-debug.aar"
   - "tools-*/build/outputs/aar/tools-*-release.aar"
-  file_glob: "true"
+  file_glob: true
   skip_cleanup: true
   on:
     tags: true
