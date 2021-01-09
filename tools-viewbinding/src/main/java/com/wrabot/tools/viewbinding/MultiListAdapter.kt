@@ -59,7 +59,7 @@ open class MultiListAdapter : ListAdapter<MultiListAdapter.Item<out Any, out Vie
             index
         } else {
             viewTypes.add(it)
-            viewTypes.size - 1
+            viewTypes.lastIndex
         }
     }
 
