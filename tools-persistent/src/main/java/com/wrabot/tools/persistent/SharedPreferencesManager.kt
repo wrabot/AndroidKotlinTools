@@ -13,10 +13,9 @@
 
 @file:Suppress("unused")
 
-package com.wrabot.tools
+package com.wrabot.tools.persistent
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
 import java.util.*
 import kotlin.reflect.KProperty
 
@@ -45,13 +44,13 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
      *
      * @property exceptions the property names to excluded from clear.
      */
-    fun clear(vararg exceptions: String) = sharedPreferences.edit {
+    fun clear(vararg exceptions: String) = sharedPreferences.edit().apply {
         if (exceptions.isEmpty()) {
             clear()
         } else {
             sharedPreferences.all.keys.minus(exceptions).forEach { remove(it) }
         }
-    }
+    }.apply()
 
     inner class StringDelegate(defaultValue: String = "")
         : PreferenceDelegate<String>({ key, value -> getString(key, value)!! }, defaultValue, SharedPreferences.Editor::putString)
@@ -80,7 +79,7 @@ open class SharedPreferencesManager(val sharedPreferences: SharedPreferences) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = sharedPreferences.get(property.name, defaultValue)
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
             if (onModified?.invoke(sharedPreferences.get(property.name, defaultValue), value) != false) {
-                sharedPreferences.edit { put(property.name, value) }
+                sharedPreferences.edit().put(property.name, value).apply()
             }
         }
     }
