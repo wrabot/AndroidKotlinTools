@@ -18,7 +18,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -32,19 +31,16 @@ open class SimpleListAdapter<T : Any, U : ViewBinding>(
         private val bind: T.(binding: U) -> Unit,
         isSame: (T, T) -> Boolean = { _, _ -> false },
         isSameContent: (T, T) -> Boolean = { oldItem, newItem -> oldItem == newItem }
-) : ListAdapter<T, SimpleListAdapter.BindingHolder<U>>(object : ItemCallback<T>() {
+) : ListAdapter<T, BindingHolder<U>>(object : ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T) = isSame(oldItem, newItem)
     override fun areContentsTheSame(oldItem: T, newItem: T) = isSameContent(oldItem, newItem)
 }) {
-    class BindingHolder<out T : ViewBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root)
-
     var onClick: (T, Int, View) -> Unit = { _, _, _ -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
                 itemView.setOnClickListener {
-                    val item = currentList.getOrNull(adapterPosition) ?: return@setOnClickListener
-                    onClick(item, adapterPosition, it)
+                    currentList.getOrNull(adapterPosition)?.run { onClick(this, adapterPosition, it) }
                 }
             }
 

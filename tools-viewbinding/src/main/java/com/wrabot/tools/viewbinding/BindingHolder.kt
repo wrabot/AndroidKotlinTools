@@ -11,11 +11,13 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-@file:Suppress("unused")
+package com.wrabot.tools.viewbinding
 
-package com.wrabot.tools
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 /**
- * Find recursively a cause which complies to a [predicate].
+ * A ViewHolder which contains the binding.
  */
-fun Throwable.findCause(predicate: (Throwable) -> Boolean): Throwable? = cause?.let { if (predicate(it)) it else it.findCause(predicate) }
+class BindingHolder<out T : ViewBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root)
+

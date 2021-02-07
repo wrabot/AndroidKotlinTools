@@ -1,6 +1,0 @@
-dependencies {
-    implementation "androidx.core:core-ktx:$ktx_core_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    implementation project(':tools-base')
-}
