@@ -17,9 +17,11 @@ Add the following repository
 Add the needed dependencies (just one or several)
 
     dependencies {
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-persistent:1.0'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-viewbinding:1.0'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:1.0'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-persistent:0.11'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-viewbinding:0.11'
+
+        // deprecated
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-databinding:0.11'
     }
     
 ## tools-persistent
@@ -144,6 +146,7 @@ adapter.submitList(listOf(item1a, item2a, item1b))
 ```
 ## tools-databinding
 Needs data binding
+Deprecated: I prefer view binding which avoid the use of lifecycle in list
 
 **SimpleListAdapter**: use easily recycler views with adapter and LiveData for one item type
 
