@@ -121,7 +121,7 @@ The second layout described named item_image.xml :
 The second binder :
 ```kotlin
     fun Drawable.bind(binding: ItemImageBinding) {
-        binding.image.setImageDrawable(image)
+        binding.image.setImageDrawable(this)
     }
 ```
 
@@ -144,6 +144,7 @@ adapter.submitList(listOf(item1a, item2a, item1b))
 ```
 ## tools-databinding
 Needs data binding
+
 Deprecated: I prefer view binding which avoid the use of lifecycle in list
 
 **SimpleListAdapter**: use easily recycler views with adapter and LiveData for one item type
