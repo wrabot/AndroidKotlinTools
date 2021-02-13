@@ -1,7 +1,9 @@
 # Android Kotlin Tools
 
 Set of tools that I use in my Android projects.
+
 NB1: Old version used RX but since coroutines, live data, flows are well defined, I migrate and simplify my tools.
+
 NB2: data binding will be replaced by view binding for list in future releases.
 
 They are split in modules to avoid including all dependencies and permissions
