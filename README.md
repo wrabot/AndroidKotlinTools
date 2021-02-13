@@ -93,18 +93,7 @@ recyclerView.adapter = SimpleListAdapter(ItemBinding::inflate, Item::bind).apply
 
 This adapter allows automatic updates through LiveData and easy item provisioning with view binding
 
-The item layout described with data binding :
-
-The item 1 POJO :
-```kotlin
-data class Item1(val text : String) {
-    fun bind(binding: ItemBinding) {
-        binding.text.text = text
-    }
-}
-```
-
-The item 1 layout described :
+The first layout described named item_text.xml :
 ```xml
 <TextView
     android:id="@+id/text"
@@ -112,16 +101,14 @@ The item 1 layout described :
     android:layout_height="wrap_content"/>
 ```
 
-The item 2 POJO :
+The first binder :
 ```kotlin
-data class Item2(val image : Drawable) {
-    fun bind(binding: ItemBinding) {
-        binding.image.setImageDrawable(image)
+    fun String.bind(binding: ItemTextBinding) {
+        binding.text.text = this
     }
-}
 ```
 
-The item 2 layout described :
+The second layout described named item_image.xml :
 ```xml
 <ImageView
     android:id="@+id/image"
@@ -129,10 +116,19 @@ The item 2 layout described :
     android:layout_height="wrap_content"/>
 ```
 
+The second binder :
+```kotlin
+    fun Drawable.bind(binding: ItemImageBinding) {
+        binding.image.setImageDrawable(image)
+    }
+```
+
+NB: String and Drawable replaced by any other class
+
 The item declarations with content, inflate method, and bind method :
 ```kotlin
-data class Item1(content : Item1) : MultiListAdapter.Item<Item1>(content, Item1Binding::inflate, Item1::bind)
-data class Item2(content : Item2) : MultiListAdapter.Item<Item2>(content, Item2Binding::inflate, Item2::bind)
+data class Item1(content : String) : MultiListAdapter.Item<String>(content, ItemTextBinding::inflate, String::bind)
+data class Item2(content : Drawable) : MultiListAdapter.Item<Drawable>(content, ItemImageBinding::inflate, Drawable::bind)
 ```
 
 Once, define the adapter
@@ -240,8 +236,8 @@ The item layout described with data binding :
 
 The item declarations with content, layout Id, and variable Id for data binding :
 ```kotlin
-data class Item1(content : Item1) : MultiListAdapter.Item<Item1>(content, R.layout.item1, BR.item1)
-data class Item2(content : Item2) : MultiListAdapter.Item<Item2>(content, R.layout.item2, BR.item2)
+data class MItem1(content : Item1) : MultiListAdapter.Item<Item1>(content, R.layout.item1, BR.item1)
+data class MItem2(content : Item2) : MultiListAdapter.Item<Item2>(content, R.layout.item2, BR.item2)
 ```
 
 Once, define the adapter
@@ -249,7 +245,7 @@ Once, define the adapter
 recyclerVew.adapter = MultiListAdapter()
 ```
 
-Update adapter a list of Item1 and/or Item2
+Update adapter a list of MItem1 and/or MItem2
 ```kotlin
 adapter.submitList(listOf(item1a, item2a, item1b))
 ```
