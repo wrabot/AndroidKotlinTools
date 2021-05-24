@@ -3,5 +3,6 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-ktx:$core_version")
     implementation("androidx.recyclerview:recyclerview:$recyclerview_version")
 }
