@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 
 /**
- * A ListAdapter adapter which uses data binding for items and lambdas for callbacks.
+ * A ListAdapter adapter which uses view binding for items and lambdas for callbacks.
  * @param inflate the item binding inflater (ie ItemBinding::inflate)
  * @param bind to bind the item to the binding
  */
@@ -40,7 +40,7 @@ open class SimpleListAdapter<T : Any, U : ViewBinding>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             BindingHolder(inflate(LayoutInflater.from(parent.context), parent, false)).apply {
                 itemView.setOnClickListener {
-                    currentList.getOrNull(adapterPosition)?.run { onClick(this, adapterPosition, it) }
+                    currentList.getOrNull(bindingAdapterPosition)?.run { onClick(this, bindingAdapterPosition, it) }
                 }
             }
 
