@@ -1,2 +1,2 @@
 rootProject.name = "AndroidKotlinTools"
-include(":tools-persistent", ":tools-databinding", ":tools-viewbinding")
+include(":tools-persistent", ":tools-viewbinding")
