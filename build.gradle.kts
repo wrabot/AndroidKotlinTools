@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.scope.ProjectInfo.Companion.getBaseName
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -39,9 +41,11 @@ subprojects {
             }
         }
         extensions.configure(PublishingExtension::class.java) {
+            val artifactName = name
             publications {
                 register<MavenPublication>("release") {
                     groupId = "com.github.wrabot.AndroidKotlinTools"
+                    artifactId = artifactName
                     version = "0.14"
                     afterEvaluate {
                         from(components["release"])
