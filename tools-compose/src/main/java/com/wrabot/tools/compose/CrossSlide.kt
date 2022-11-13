@@ -28,6 +28,26 @@ fun CrossSlidePreview() {
     }
 }
 
+/**
+ * [CrossSlide] is a container that slides its content when [targetState] changes.
+ * Its [content] for different target states is defined in a mapping between a target state
+ * and a composable function.
+ *
+ * When [targetState] changes, content for both new and previous targetState will be looked up
+ * through the [content] lambda.
+ * The [targetState] must be a comparable in order to decide which amination will be execute:
+ * If [targetState] is greater than current state, the current state's content slide out to left
+ * and the target state's content slide in from right
+ * If [targetState] is lesser than current state, the current state's content slide in from left
+ * and the target state's content slide out to right
+ * If [targetState] equals current state, the current state's content fade out and
+ * the target state's content fade in
+ *
+ * **IMPORTANT**: The targetState parameter for the [content] lambda should *always* be taken
+ * into account in deciding what composable function to return as the content for that state.
+ * This is critical to ensure a successful lookup of all the incoming and outgoing content during
+ * content transform.
+ */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun <T : Comparable<T>> CrossSlide(
