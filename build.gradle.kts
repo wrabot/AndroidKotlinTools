@@ -42,7 +42,6 @@ subprojects {
             publications {
                 register<MavenPublication>("release") {
                     groupId = "com.github.wrabot.AndroidKotlinTools"
-                    artifactId = name
                     version = "0.14"
                     afterEvaluate {
                         from(components["release"])
