@@ -1,1 +1,0 @@
-include ':tools-persistent', ':tools-databinding', ':tools-viewbinding'
