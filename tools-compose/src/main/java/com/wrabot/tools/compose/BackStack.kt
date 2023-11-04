@@ -40,13 +40,14 @@ class BackStack<T : Any>(initial: T) {
 
     fun clear() = backStack.clear()
 
-    fun clearTo(state: T, inclusive: Boolean = false) {
-        while (backStack.lastOrNull() != state) backStack.removeLastOrNull()
-        if (inclusive) backStack.removeLastOrNull()
+    fun clearTo(state: T, inclusive: Boolean = false): Boolean {
+        val index = backStack.lastIndexOf(state)
+        if (index == -1) return false
+        backStack.removeRange(if (inclusive) index else index + 1, backStack.size)
+        return true
     }
 
-    fun back(skip: Int = 0) {
-        repeat(skip) { backStack.removeLastOrNull() ?: return }
+    fun back() {
         current = backStack.removeLastOrNull() ?: return
     }
 
