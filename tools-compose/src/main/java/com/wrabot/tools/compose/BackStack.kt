@@ -15,7 +15,9 @@
 
 package com.wrabot.tools.compose
 
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
@@ -27,14 +29,15 @@ import androidx.compose.runtime.setValue
  * written without modifying the back stack.
  * [next] adds [current] to the back stack and modify current with new value.
  * [clear] clears the back stack.
+ * [clearTo] clears the back stack until a state.
  * [hasBack] returns whether the back stack is empty.
  * [back] restores the last state into [current]. Several state can be skipped.
  */
 class BackStack<T : Any>(initial: T) {
-    private var backStack = mutableListOf<T>()
+    private var backStack = mutableStateListOf<T>()
+    val hasBack by derivedStateOf { backStack.isNotEmpty() }
     var current by mutableStateOf<T>(initial)
 
-    fun hasBack() = backStack.isNotEmpty()
     fun clear() = backStack.clear()
 
     fun clearTo(state: T, inclusive: Boolean = false) {
