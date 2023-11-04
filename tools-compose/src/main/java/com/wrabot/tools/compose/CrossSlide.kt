@@ -85,9 +85,9 @@ fun <T : Comparable<T>> CrossSlide(
     modifier = modifier,
     transitionSpec = {
         when (this.targetState.compareTo(initialState).sign) {
-            -1 -> slideInHorizontally { -it } togetherWith slideOutHorizontally { it }
-            1 -> slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
-            else -> fadeIn() togetherWith fadeOut()
+            -1 -> slideInHorizontally { -it } with slideOutHorizontally { it }
+            1 -> slideInHorizontally { it } with slideOutHorizontally { -it }
+            else -> fadeIn() with fadeOut()
         }
     },
     label = label

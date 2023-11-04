@@ -4,14 +4,14 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-30.0.3
-    - android-30
+    - build-tools
+    - android-34
     - extra-android-m2repository
 
-jdk: oraclejdk8
+jdk: openjdk11
 
 before_install:
-- yes | sdkmanager "platforms;android-30"
+- yes | sdkmanager "platforms;android-34"
 
 script:
 - ./gradlew assemble
