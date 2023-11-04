@@ -8,7 +8,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.2")
+        classpath("com.android.tools.build:gradle:8.1.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
     }
 }
@@ -26,18 +26,15 @@ subprojects {
     plugins.withType(com.android.build.gradle.LibraryPlugin::class) {
         extensions.configure(com.android.build.gradle.LibraryExtension::class.java) {
             namespace = "com.wrabot.tools.${name.removePrefix("tools-")}"
-            compileSdk = 33
+            compileSdk = 34
             defaultConfig {
                 minSdk = 21
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 consumerProguardFiles("proguard-rules.txt")
-                aarMetadata {
-                    minCompileSdk = 33
-                }
             }
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
         }
         extensions.configure(PublishingExtension::class.java) {
@@ -57,7 +54,7 @@ subprojects {
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "17"
         }
     }
 }
