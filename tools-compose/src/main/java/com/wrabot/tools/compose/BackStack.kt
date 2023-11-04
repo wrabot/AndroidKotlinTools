@@ -37,6 +37,11 @@ class BackStack<T : Any>(initial: T) {
     fun hasBack() = backStack.isNotEmpty()
     fun clear() = backStack.clear()
 
+    fun clearTo(state: T, inclusive: Boolean = false) {
+        while (backStack.lastOrNull() != state) backStack.removeLastOrNull()
+        if (inclusive) backStack.removeLastOrNull()
+    }
+
     fun back(skip: Int = 0) {
         repeat(skip) { backStack.removeLastOrNull() ?: return }
         current = backStack.removeLastOrNull() ?: return
