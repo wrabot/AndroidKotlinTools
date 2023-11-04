@@ -8,10 +8,10 @@ android:
     - android-34
     - extra-android-m2repository
 
-jdk: oraclejdk8
+jdk: openjdk11
 
 before_install:
-- yes | sdkmanager "platforms;android-30"
+- yes | sdkmanager "platforms;android-34"
 
 script:
 - ./gradlew assemble
