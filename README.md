@@ -19,8 +19,8 @@ Add the following repository
 Add the needed dependencies (just one or several)
 
     dependencies {
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-persistent:0.14'
-        implementation 'com.github.wrabot.AndroidKotlinTools:tools-compose:0.14'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-persistent:0.16'
+        implementation 'com.github.wrabot.AndroidKotlinTools:tools-compose:0.16'
     }
 
 ## tools-persistent
@@ -79,7 +79,7 @@ Thanks to "BackStack" and "CrossSlide" defined in this library, this function wi
 @Composable
 fun MyFlow(viewModel: MyViewModel = viewModel()) =
     Column(Modifier.fillMaxSize()) {
-        BackHandler(viewModel.backStack.hasBack()) { viewModel.backStack.back() }
+        BackHandler(viewModel.backStack.hasBack) { viewModel.backStack.back() }
         CrossSlide(viewModel.backStack.current) { state ->
             when (state) {
                 State.Loading -> {
