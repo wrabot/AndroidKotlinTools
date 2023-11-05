@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.1.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
     }
 }
 
@@ -43,7 +43,7 @@ subprojects {
                 register<MavenPublication>("release") {
                     groupId = "com.github.wrabot.AndroidKotlinTools"
                     artifactId = artifactName
-                    version = "0.16"
+                    version = "0.17"
                     afterEvaluate {
                         from(components["release"])
                     }
