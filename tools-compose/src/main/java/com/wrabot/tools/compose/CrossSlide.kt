@@ -37,7 +37,10 @@ import kotlin.math.sign
 @Composable
 fun CrossSlidePreview() {
     var state by remember { mutableStateOf(0) }
-    CrossSlide(state, Modifier.size(100.dp).clickable { state = (state + 1) % 4 }, "slide") {
+    CrossSlide(state,
+        Modifier
+            .size(100.dp)
+            .clickable { state = (state + 1) % 4 }, "slide") {
         Box(contentAlignment = Alignment.Center) {
             Text(AnnotatedString(it.toString()))
         }
@@ -78,16 +81,16 @@ private fun Text(text: AnnotatedString) {
 fun <T : Comparable<T>> CrossSlide(
     targetState: T,
     modifier: Modifier = Modifier,
-    label : String = "CrossSlide",
+    label: String = "CrossSlide",
     content: @Composable (T) -> Unit
 ) = AnimatedContent(
     targetState = targetState,
     modifier = modifier,
     transitionSpec = {
         when (this.targetState.compareTo(initialState).sign) {
-            -1 -> slideInHorizontally { -it } with slideOutHorizontally { it }
-            1 -> slideInHorizontally { it } with slideOutHorizontally { -it }
-            else -> fadeIn() with fadeOut()
+            -1 -> slideInHorizontally { -it } togetherWith slideOutHorizontally { it }
+            1 -> slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
+            else -> fadeIn() togetherWith fadeOut()
         }
     },
     label = label
