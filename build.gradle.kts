@@ -29,7 +29,6 @@ subprojects {
             compileSdk = 34
             defaultConfig {
                 minSdk = 21
-                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 consumerProguardFiles("proguard-rules.txt")
             }
             compileOptions {
@@ -43,7 +42,7 @@ subprojects {
                 register<MavenPublication>("release") {
                     groupId = "com.github.wrabot.AndroidKotlinTools"
                     artifactId = artifactName
-                    version = "0.17"
+                    version = "0.18"
                     afterEvaluate {
                         from(components["release"])
                     }
